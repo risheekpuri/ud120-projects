@@ -14,6 +14,7 @@ import sys
 from time import time
 sys.path.append("../tools/")
 from email_preprocess import preprocess
+from sklearn import GaussianNB
 
 
 ### features_train and features_test are the features for the training
@@ -21,7 +22,12 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
+clf = GaussianNB()
+clf.fit(features_train, labels_train)
+predict_train = clf.predict(features_train)
+predict_test = clf.predict(features_test)
 
+print("accuracy = ", (predict_test==labels_test).mean())
 
 
 #########################################################
